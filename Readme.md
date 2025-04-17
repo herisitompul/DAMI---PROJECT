@@ -11,3 +11,4 @@
 ## Micro F1-Score Calculation
 ![image](./image.png)
 
+### Timeline Proyek : https://docs.google.com/spreadsheets/d/1Zd2e_l9tSTWr4j9uxlHxnglY9LbrdvSJ8nIocYe69a8/edit?usp=sharing
