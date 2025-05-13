@@ -1,6 +1,7 @@
-flask
+streamlit
+streamlit-folium
+tensorflow==2.19.0
+scikit-learn
 numpy
-keras
-tensorflow
+Pillow
 folium
-gunicorn
