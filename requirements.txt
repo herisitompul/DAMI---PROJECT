@@ -1,6 +1,6 @@
-streamlit
-tensorflow==2.19.0
+flask
 numpy
-Pillow
+keras
+tensorflow
 folium
-scikit-learn
+gunicorn
