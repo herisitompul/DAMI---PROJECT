@@ -1,13 +1,12 @@
-from flask import Flask, render_template, request
+import streamlit as st
 import numpy as np
 import pickle
-import os
 import folium
-from keras.models import model_from_json, load_model
+from keras.models import model_from_json
+from keras.models import load_model
+from streamlit_folium import st_folium
 
-model = load_model("species_prediction_mlp.keras")
-
-# Load model dari .pkl
+# Load model dan scaler
 with open("species_prediction_model1.pkl", "rb") as f:
     data = pickle.load(f)
     scaler = data["scaler"]
@@ -15,47 +14,40 @@ with open("species_prediction_model1.pkl", "rb") as f:
     model.set_weights(data["model_weights"])
     features = data["features"]
 
-app = Flask(__name__)
+st.set_page_config(page_title="Prediksi Spesies", layout="wide")
+st.title("📍 Location-based Species Presence Prediction using CNN")
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    prediction = None
-    map_file = None
+# Input Form
+with st.form("species_form"):
+    lon = st.text_input("Longitude:")
+    lat = st.text_input("Latitude:")
+    year = st.number_input("Year", min_value=0, step=1)
+    geo = st.text_input("Geo Uncertainty (m):")
+    speciesId = st.number_input("Species ID", min_value=0, step=1)
+    submitted = st.form_submit_button("Predict")
 
-    if request.method == "POST":
-        try:
-            # Ambil input dari form
-            lon = float(request.form["lon"])
-            lat = float(request.form["lat"])
-            year = int(request.form["year"])
-            geo = float(request.form["geo"])
-            speciesId = int(request.form["speciesId"])
+if submitted:
+    try:
+        lon = float(lon)
+        lat = float(lat)
+        geo = float(geo)
 
-            # Preprocessing input
-            input_data = np.array([[lon, lat, year, geo, speciesId]])
-            input_scaled = scaler.transform(input_data)
+        input_data = np.array([[lon, lat, year, geo, speciesId]])
+        input_scaled = scaler.transform(input_data)
+        prob = model.predict(input_scaled)[0][0]
 
-            # Prediksi
-            prob = model.predict(input_scaled)[0][0]
-            prediction = f"Prediksi Probabilitas Kehadiran Spesies: {prob:.2f}"
+        st.success(f"✅ Prediksi Probabilitas Kehadiran Spesies: {prob:.2f}")
 
-            # Buat peta interaktif
-            m = folium.Map(location=[lat, lon], zoom_start=6)
-            folium.Marker(
-                location=[lat, lon],
-                popup=f"Lokasi Input<br>Lat: {lat}<br>Lon: {lon}<br>Probabilitas: {prob:.2f}",
-                icon=folium.Icon(color='red')
-            ).add_to(m)
+        # Buat peta folium
+        m = folium.Map(location=[lat, lon], zoom_start=6)
+        folium.Marker(
+            location=[lat, lon],
+            popup=f"Lat: {lat}, Lon: {lon}, Prob: {prob:.2f}",
+            icon=folium.Icon(color='red')
+        ).add_to(m)
 
-            # Simpan sebagai HTML di folder static
-            map_path = os.path.join("static", "map.html")
-            m.save(map_path)
-            map_file = "map.html"
+        st.markdown("### 🌍 Map of Location")
+        st_folium(m, width=700, height=500)
 
-        except Exception as e:
-            prediction = f"Terjadi kesalahan: {e}"
-
-    return render_template("index.html", prediction=prediction, map_file=map_file)
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    except Exception as e:
+        st.error(f"Terjadi kesalahan: {e}")
