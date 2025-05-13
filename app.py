@@ -40,6 +40,7 @@ if submitted:
 
         # Prediksi
         prob = model.predict(input_scaled)[0][0]
+        st.session_state.prediction_result = prob  # Simpan hasil prediksi dalam session_state
         st.success(f"✅ Prediksi Probabilitas Kehadiran Spesies: **{prob:.2f}**")
 
         # Peta Interaktif
@@ -55,3 +56,7 @@ if submitted:
 
     except Exception as e:
         st.error(f"❌ Terjadi kesalahan: {e}")
+else:
+    # Tampilkan hasil prediksi jika sudah disubmit sebelumnya
+    if 'prediction_result' in st.session_state:
+        st.success(f"✅ Prediksi Probabilitas Kehadiran Spesies: **{st.session_state.prediction_result:.2f}**")
