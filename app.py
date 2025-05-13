@@ -17,41 +17,46 @@ with open("species_prediction_model1.pkl", "rb") as f:
 st.set_page_config(page_title="Prediksi Spesies", layout="wide")
 st.title("📍 Location-based Species Presence Prediction using CNN")
 
-# Input Form
-with st.form("species_form"):
-    lon = st.text_input("Longitude:")
-    lat = st.text_input("Latitude:")
-    year = st.number_input("Year", min_value=0, step=1)
-    geo = st.text_input("Geo Uncertainty (m):")
-    speciesId = st.number_input("Species ID", min_value=0, step=1)
-    submitted = st.form_submit_button("Predict")
+# Create two columns for input and output
+col1, col2 = st.columns([1, 2])  # Adjust the ratio as needed
 
-if submitted:
-    try:
-        lon = float(lon)
-        lat = float(lat)
-        geo = float(geo)
+# Input Form in the left column
+with col1:
+    st.header("Input Form")
+    with st.form("species_form"):
+        lon = st.text_input("Longitude:")
+        lat = st.text_input("Latitude:")
+        year = st.number_input("Year", min_value=0, step=1)
+        geo = st.text_input("Geo Uncertainty (m):")
+        speciesId = st.number_input("Species ID", min_value=0, step=1)
+        submitted = st.form_submit_button("Predict")
 
-        input_data = np.array([[lon, lat, year, geo, speciesId]])
-        input_scaled = scaler.transform(input_data)
-        prob = model.predict(input_scaled)[0][0]
+# Output Map in the right column
+with col2:
+    st.header("🌍 Map of Location")
+    if submitted:
+        try:
+            lon = float(lon)
+            lat = float(lat)
+            geo = float(geo)
 
-        #st.success(f"✅ Prediksi Probabilitas Kehadiran Spesies: {prob:.2f}")
+            input_data = np.array([[lon, lat, year, geo, speciesId]])
+            input_scaled = scaler.transform(input_data)
+            prob = model.predict(input_scaled)[0][0]
 
-        # Tampilkan peta
-        st.markdown("### 🌍 Map of Location")
-        m = folium.Map(location=[lat, lon], zoom_start=6)
-        folium.Marker(
-            location=[lat, lon],
-            popup=f"Lat: {lat}, Lon: {lon}, Prob: {prob:.2f}",
-            icon=folium.Icon(color='red')
-        ).add_to(m)
+            # Display the map
+            m = folium.Map(location=[lat, lon], zoom_start=6)
+            folium.Marker(
+                location=[lat, lon],
+                popup=f"Lat: {lat}, Lon: {lon}, Prob: {prob:.2f}",
+                icon=folium.Icon(color='red')
+            ).add_to(m)
 
-        # Render peta jadi HTML dan tampilkan
-        map_html = m._repr_html_()
-        html(map_html, height=500, width=700)
+            # Render map as HTML and display
+            map_html = m._repr_html_()
+            html(map_html, height=500, width=700)
 
-    except ValueError:
-        st.error("⚠️ Pastikan semua input numerik diisi dengan benar.")
-    except Exception as e:
-        st.error(f"❌ Terjadi kesalahan: {e}")
+        except ValueError:
+            st.error("⚠️ Pastikan semua input numerik diisi dengan benar.")
+        except Exception as e:
+            st.error(f"❌ Terjadi kesalahan: {e}")
