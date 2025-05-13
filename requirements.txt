@@ -1,7 +1,6 @@
-Flask>=2.0
+streamlit
+streamlit-folium
 tensorflow>=2.5
-Werkzeug>=2.0
 numpy
-Pillow
-folium
-gunicorn
+keras
+pillow
