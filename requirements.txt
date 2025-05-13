@@ -1,7 +1,5 @@
-streamlit
-streamlit-folium
-tensorflow==2.19.0
-scikit-learn
+Flask>=2.0
+tensorflow>=2.5
+Werkzeug>=2.0
 numpy
 Pillow
-folium
