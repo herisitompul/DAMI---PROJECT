@@ -36,7 +36,7 @@ if submitted:
         input_scaled = scaler.transform(input_data)
         prob = model.predict(input_scaled)[0][0]
 
-        st.success(f"✅ Prediksi Probabilitas Kehadiran Spesies: {prob:.2f}")
+        #st.success(f"✅ Prediksi Probabilitas Kehadiran Spesies: {prob:.2f}")
 
         # Tampilkan peta
         st.markdown("### 🌍 Map of Location")
