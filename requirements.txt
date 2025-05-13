@@ -3,3 +3,5 @@ tensorflow>=2.5
 Werkzeug>=2.0
 numpy
 Pillow
+folium
+gunicorn
