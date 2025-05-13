@@ -22,7 +22,7 @@ col1, col2 = st.columns([1, 2])  # Adjust the ratio as needed
 
 # Input Form in the left column
 with col1:
-    #st.header("Input Form")
+    st.header("Input Form")
     with st.form("species_form"):
         lon = st.text_input("Longitude:")
         lat = st.text_input("Latitude:")
@@ -36,19 +36,19 @@ with col2:
     st.header("🌍 Map of Location")
     if submitted:
         try:
-            lon = float(lon)
-            lat = float(lat)
-            geo = float(geo)
+            lon_float = float(lon)
+            lat_float = float(lat)
+            geo_float = float(geo)
 
-            input_data = np.array([[lon, lat, year, geo, speciesId]])
+            input_data = np.array([[lon_float, lat_float, year, geo_float, speciesId]])
             input_scaled = scaler.transform(input_data)
             prob = model.predict(input_scaled)[0][0]
 
             # Display the map
-            m = folium.Map(location=[lat, lon], zoom_start=6)
+            m = folium.Map(location=[lat_float, lon_float], zoom_start=6)
             folium.Marker(
-                location=[lat, lon],
-                popup=f"Lat: {lat}, Lon: {lon}, Prob: {prob:.2f}",
+                location=[lat_float, lon_float],
+                popup=f"Lat: {lat_float}, Lon: {lon_float}, Prob: {prob:.2f}",
                 icon=folium.Icon(color='red')
             ).add_to(m)
 
@@ -60,3 +60,12 @@ with col2:
             st.error("⚠️ Pastikan semua input numerik diisi dengan benar.")
         except Exception as e:
             st.error(f"❌ Terjadi kesalahan: {e}")
+    else:
+        # Show placeholder message when no prediction or map yet
+        st.markdown(
+            """
+            <h2 style="color:#6b7280; text-align:center; margin-top: 60px;">
+            The prediction results and maps will appear here.
+            </h2>
+            """, unsafe_allow_html=True)
+
