@@ -3,8 +3,7 @@ import numpy as np
 import pickle
 import folium
 from keras.models import model_from_json
-from keras.models import load_model
-from streamlit_folium import st_folium
+from streamlit.components.v1 import html
 
 # Load model dan scaler
 with open("species_prediction_model1.pkl", "rb") as f:
@@ -14,6 +13,7 @@ with open("species_prediction_model1.pkl", "rb") as f:
     model.set_weights(data["model_weights"])
     features = data["features"]
 
+# Konfigurasi Streamlit
 st.set_page_config(page_title="Prediksi Spesies", layout="wide")
 st.title("📍 Location-based Species Presence Prediction using CNN")
 
@@ -38,7 +38,8 @@ if submitted:
 
         st.success(f"✅ Prediksi Probabilitas Kehadiran Spesies: {prob:.2f}")
 
-        # Buat peta folium
+        # Tampilkan peta
+        st.markdown("### 🌍 Map of Location")
         m = folium.Map(location=[lat, lon], zoom_start=6)
         folium.Marker(
             location=[lat, lon],
@@ -46,8 +47,11 @@ if submitted:
             icon=folium.Icon(color='red')
         ).add_to(m)
 
-        st.markdown("### 🌍 Map of Location")
-        st_folium(m, width=700, height=500)
+        # Render peta jadi HTML dan tampilkan
+        map_html = m._repr_html_()
+        html(map_html, height=500, width=700)
 
+    except ValueError:
+        st.error("⚠️ Pastikan semua input numerik diisi dengan benar.")
     except Exception as e:
-        st.error(f"Terjadi kesalahan: {e}")
+        st.error(f"❌ Terjadi kesalahan: {e}")
