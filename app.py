@@ -22,7 +22,7 @@ col1, col2 = st.columns([1, 2])  # Adjust the ratio as needed
 
 # Input Form in the left column
 with col1:
-    st.header("Input Form")
+    #st.header("Input Form")
     with st.form("species_form"):
         lon = st.text_input("Longitude:")
         lat = st.text_input("Latitude:")
