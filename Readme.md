@@ -5,6 +5,9 @@ Proyek ini bertujuan untuk membangun sebuah model klasifikasi multilabel berbasi
 
 **Dataset**: [GeoLifeCLEF 2025 on Kaggle](https://www.kaggle.com/competitions/geolifeclef-2025/data)
 
+![image](https://github.com/user-attachments/assets/0c4ea0ae-dc92-48a9-95b6-a953cdf5dbf7)
+
+
 ## 🚀 Demo
 ### How to explore the Location-based Species Presence Prediction system? [Click here](https://dami---project-5npsxbxzserecrmdtg4dvj.streamlit.app/)
 ![image](https://github.com/user-attachments/assets/962e6087-1cbe-4089-9f45-5a69399081ed)
