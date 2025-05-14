@@ -44,7 +44,7 @@ with col2:
             input_scaled = scaler.transform(input_data)
             prob = model.predict(input_scaled)[0][0]
 
-            st.success(f"✅ Probabilitas Kehadiran Spesies di Lokasi Ini: {prob * 100:.2f}%")
+            st.success(f"✅ Probabilitas Kehadiran Spesies di Lokasi Ini: {prob:.2f}")
             
             st.markdown("---")
             
