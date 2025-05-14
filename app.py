@@ -44,6 +44,8 @@ with col2:
             input_scaled = scaler.transform(input_data)
             prob = model.predict(input_scaled)[0][0]
 
+            st.success(f"✅ Prediksi Probabilitas Kehadiran Spesies: {prob:.2f}")
+            
             # Display the map
             m = folium.Map(location=[lat_float, lon_float], zoom_start=6)
             folium.Marker(
