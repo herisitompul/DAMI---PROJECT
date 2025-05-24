@@ -10,7 +10,7 @@ Proyek ini bertujuan untuk membangun sebuah model klasifikasi multilabel berbasi
 
 ## 🚀 Demo
 ### How to explore the Location-based Species Presence Prediction system? [Click here](https://dami---project-5npsxbxzserecrmdtg4dvj.streamlit.app/)
-![image](https://github.com/user-attachments/assets/962e6087-1cbe-4089-9f45-5a69399081ed)
+![image](https://github.com/user-attachments/assets/d05c39bd-74fe-4288-a5fd-d64a96834d1a)
 
 ## 🛠️ Deployment
 Aplikasi ini dikembangkan dan dideploy menggunakan [Streamlit](https://share.streamlit.io/), sebuah pustaka Python open-source yang memungkinkan pengembangan antarmuka web secara cepat untuk proyek machine learning dan data science.
