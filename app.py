@@ -11,7 +11,7 @@ model = joblib.load('model/final_rf_model.pkl')
 scaler = joblib.load('model/final_scaler.pkl')
 
 # Load dataset
-df = pd.read_csv('dataset_sample_100000.csv')
+df = pd.read_csv('data/dataset_sample_100000.csv')
 
 st.title("Prediction of Species Presence")
 
