@@ -1,4 +1,4 @@
-# 🌍 Location-based Species Presence Prediction using CNN
+# 🌍 Location-based Species Presence Prediction using ramdom forest
 
 ## 🏝️ Overview
 Proyek ini bertujuan untuk membangun sebuah model klasifikasi multilabel berbasis CNN yang mampu memprediksi sekumpulan spesies tanaman berdasarkan kombinasi berbagai fitur spasial dan temporal.
